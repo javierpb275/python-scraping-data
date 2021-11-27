@@ -8,6 +8,9 @@ if __name__ == '__main__':
     links = soup.select('.titlelink')
     subtext = soup.select('.subtext')
 
+    def sort_stories_by_votes(hnlist):
+        return sorted(hnlist, key=lambda k:k['votes'], reverse=True)#common pattern to sort dictionaries
+
     def create_custom_hn(links, subtext):
         hn = []
         for idx, item in enumerate(links):
@@ -18,6 +21,6 @@ if __name__ == '__main__':
                 points = int(vote[0].getText().replace(' points', ''))
                 if points > 99:
                     hn.append({'title': title,'link':href, 'votes': points})
-        return hn
+        return sort_stories_by_votes(hn)
 
     pprint.pprint(create_custom_hn(links, subtext))
